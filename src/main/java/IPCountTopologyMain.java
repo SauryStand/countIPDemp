@@ -1,8 +1,8 @@
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.topology.TopologyBuilder;
-import bolt.IPCounter;
-import woker.IPReader;
+import bolt.IPAnalysisCounter;
+import woker.IPAnalysis;
 
 /**
  * @Description:
@@ -13,9 +13,14 @@ public class IPCountTopologyMain {
     public static void main(String[] args) throws InterruptedException {
         // initial a topology
         TopologyBuilder builder = new TopologyBuilder();
-        builder.setSpout("word-reader", new IPReader());
-        builder.setBolt("word-normalizer", new IPCounter(),2).shuffleGrouping("word-reader");
+        //for ip file abruption
+        //builder.setSpout("IP-reader", new IPReader());
+        //builder.setBolt("IP-normalizer", new IPCounter(),2).shuffleGrouping("IP-reader");
         //builder.setBolt("word-counter", new IPCounter(), 2).fieldsGrouping("word-reader", new Fields("word"));
+
+        builder.setSpout("IP-Analysis", new IPAnalysis());
+        builder.setBolt("IP-AnalysisCounter", new IPAnalysisCounter(),2).shuffleGrouping("IP-Analysis");
+
         Config config = new Config();
         //config.put("IPsFile", "h:/testing_folder/words.txt");
         config.put("IPsFile", "D:/Source_codes/My_java_projects/ipDivide/temp1/ip_sources.txt");

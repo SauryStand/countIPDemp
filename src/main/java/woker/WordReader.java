@@ -67,11 +67,12 @@ public class WordReader implements IRichSpout {
                  * 发射每一行，Values是一个ArrayList的实现
                  */
                 this.collector.emit(new Values(str), str);
+                //this.collector.emit("1", str);
             }
         } catch (Exception e) {
             throw new RuntimeException("Error reading tuple", e);
         } finally {
-            completed = true;
+            completed = true;//never been used
         }
 
     }

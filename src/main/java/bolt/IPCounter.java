@@ -40,6 +40,7 @@ public class IPCounter implements IRichBolt {
     @Override
     public void execute(Tuple tuple) {
         String ipStr = tuple.getString(0);
+        //File asd = (File) tuple.getValue(0);
         String hashIp = modifyToHash(ipStr);
 
         if (map.containsKey(hashIp)) {
@@ -65,7 +66,6 @@ public class IPCounter implements IRichBolt {
                 }
                 fileWriter.close();
                 count = 0;
-                //tempCount = 0;
                 map.clear();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -117,4 +117,8 @@ public class IPCounter implements IRichBolt {
     public Map<String, Object> getComponentConfiguration() {
         return null;
     }
+
+
+
 }
+
